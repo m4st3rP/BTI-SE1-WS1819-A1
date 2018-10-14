@@ -25,7 +25,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testCaseNonSensibility() {
+	public void testCaseInsensitivity() {
 		DistanceClasses dc1 = distanceClassificator.determineDistanceClass('a', 5);
 		DistanceClasses dc2 = distanceClassificator.determineDistanceClass('A', 5);
 		assertEquals(dc1, dc2);
