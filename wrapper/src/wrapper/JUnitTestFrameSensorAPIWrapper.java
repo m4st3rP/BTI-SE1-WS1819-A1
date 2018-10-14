@@ -64,15 +64,6 @@ public class JUnitTestFrameSensorAPIWrapper {
     	char testValue = 256;
     	ISensorAPI sensorAPIstub = new SensorAPIStub(testValue);
     }
-        
-    
-    @Test(expected = IllegalArgumentException.class)
-    public void testUnreliableMeasurement() {
-    	ISensorAPI sensorAPIstub = new SensorAPIStub((char)4);
-        SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPIstub);
-        sensorAPIWrapper.t();
-        sensorAPIWrapper.d();
-    }
     
     @Test
     public void testUnreliableMeasurementAutomated() {
