@@ -28,7 +28,6 @@ public class JUnitTestFrameSensorAPIWrapper {
 	        char measuredDistance = sensorAPIWrapper.d();
 	        assertEquals(distance, measuredDistance);
     	}
-        
     }
     
     @Test(expected = IllegalStateException.class)
@@ -37,6 +36,19 @@ public class JUnitTestFrameSensorAPIWrapper {
         ISensorAPI sensorAPIstub = new SensorAPIStub(testValue);
         SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPIstub);
         sensorAPIWrapper.d();
+    }
+    
+    @Test
+    public void testMeasureWithoutSecondTrigger() {
+    	char testValue = 150;
+    	ISensorAPI sensorAPIstub = new SensorAPIStub(testValue);
+    	SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPIstub);
+    	sensorAPIWrapper.t();
+    	char c1 = sensorAPIWrapper.d();
+    	char testValue2 = 200;
+    	((SensorAPIStub)sensorAPIstub).setDiscreteDistanceValue(testValue2);
+    	char c2 = sensorAPIWrapper.d();
+    	assertEquals(c1, c2); // Equal, because sensor has not been triggered.
     }
     
     @Test
@@ -95,5 +107,4 @@ public class JUnitTestFrameSensorAPIWrapper {
     	return (char)realDistance_d;
     }
 
-    
 }

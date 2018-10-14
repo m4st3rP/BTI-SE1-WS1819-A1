@@ -26,7 +26,7 @@ public class SensorAPIStub implements ISensorAPI {
     @Override
     public char d() {
     	if(measuredDistance == Character.MAX_VALUE) {
-    		//MaxValue indicates that the distance has not been measaured
+    		//MaxValue indicates that the distance has not been measured
     		throw new IllegalStateException();
     	}
         return measuredDistance;
