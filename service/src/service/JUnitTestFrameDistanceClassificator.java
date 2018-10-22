@@ -16,17 +16,17 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidModeArguments() {
+	public void InvalidModeArgumentsTest() {
 		distanceClassificator.determineDistanceClass('c', 10);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidDistanceArguments() {
+	public void InvalidDistanceArgumentsTest() {
 		distanceClassificator.determineDistanceClass('a', -1);
 	}
 	
 	@Test
-	public void testCaseInsensitivity() {
+	public void CaseInsensitivityTest() {
 		DistanceClasses dc1 = distanceClassificator.determineDistanceClass('a', 5);
 		DistanceClasses dc2 = distanceClassificator.determineDistanceClass('A', 5);
 		assertEquals(dc1, dc2);
@@ -37,7 +37,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testForCloseModeA() {
+	public void CloseModeATest() {
 		DistanceClasses dc = null;
 		for(int distance = 0; distance < 8; distance++) {
 			dc = distanceClassificator.determineDistanceClass('a', distance);
@@ -46,7 +46,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testForMiddleModeA() {
+	public void MiddleModeATest() {
 		DistanceClasses dc = null;
 		for(int distance = 8; distance < 18; distance++) {
 			dc = distanceClassificator.determineDistanceClass('a', distance);
@@ -55,7 +55,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testForFarModeA() {
+	public void FarModeATest() {
 		DistanceClasses dc = null;
 		for(int distance = 18; distance < 25; distance++) {
 			dc = distanceClassificator.determineDistanceClass('a', distance);
@@ -64,7 +64,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testForOffModeA() {
+	public void OffModeATest() {
 		DistanceClasses dc = null;
 		for(int distance = 25; distance < 30; distance++) {
 			dc = distanceClassificator.determineDistanceClass('a', distance);
@@ -73,7 +73,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	//----------------
 	@Test
-	public void testForCloseModeB() {
+	public void CloseModeBTest() {
 		DistanceClasses dc = null;
 		for(int distance = 0; distance <= 5; distance++) {
 			dc = distanceClassificator.determineDistanceClass('b', distance);
@@ -82,7 +82,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testForMiddleModeB() {
+	public void MiddleModeBTest() {
 		DistanceClasses dc = null;
 		for(int distance = 6; distance < 10; distance++) {
 			dc = distanceClassificator.determineDistanceClass('b', distance);
@@ -91,7 +91,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testForFarModeB() {
+	public void FarModeBTest() {
 		DistanceClasses dc = null;
 		for(int distance = 11; distance < 14; distance++) {
 			dc = distanceClassificator.determineDistanceClass('b', distance);
@@ -100,7 +100,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testForOffModeB() {
+	public void OffModeBTest() {
 		DistanceClasses dc = null;
 		for(int distance = 14; distance < 20; distance++) {
 			dc = distanceClassificator.determineDistanceClass('b', distance);
@@ -109,7 +109,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testID1() {
+	public void ID1Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.CLOSE;
 		char mode = 'a';
@@ -120,7 +120,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testID2() {
+	public void ID2Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.MIDDLE;
 		char mode = 'a';
@@ -131,7 +131,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testID3() {
+	public void ID3Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.FAR;
 		char mode = 'a';
@@ -142,7 +142,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testID4() {
+	public void ID4Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.OFF;
 		char mode = 'a';
@@ -153,7 +153,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testID5() {
+	public void ID5Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.CLOSE;
 		char mode = 'b';
@@ -164,7 +164,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testID6() {
+	public void ID6Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.MIDDLE;
 		char mode = 'b';
@@ -175,7 +175,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testID7() {
+	public void ID7Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.FAR;
 		char mode = 'b';
@@ -186,7 +186,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testID8() {
+	public void ID8Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.OFF;
 		char mode = 'b';
@@ -197,7 +197,7 @@ public class JUnitTestFrameDistanceClassificator {
 	}
 	
 	@Test
-	public void testID9() {
+	public void ID9Test() {
 		boolean exthrown = false;
 		char mode = 'c';
 		int dist = 6;
