@@ -1,6 +1,7 @@
 package service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -105,6 +106,109 @@ public class JUnitTestFrameDistanceClassificator {
 			dc = distanceClassificator.determineDistanceClass('b', distance);
 			assertEquals(DistanceClasses.OFF, dc);
 		}
+	}
+	
+	@Test
+	public void testID1() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.CLOSE;
+		char mode = 'a';
+		int dist = 6;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals(res, exp);
+	}
+	
+	@Test
+	public void testID2() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.MIDDLE;
+		char mode = 'a';
+		int dist = 10;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals(res, exp);
+	}
+	
+	@Test
+	public void testID3() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.FAR;
+		char mode = 'a';
+		int dist = 23;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals(res, exp);
+	}
+	
+	@Test
+	public void testID4() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.OFF;
+		char mode = 'a';
+		int dist = 26;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals(res, exp);
+	}
+	
+	@Test
+	public void testID5() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.CLOSE;
+		char mode = 'b';
+		int dist = 3;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals(res, exp);
+	}
+	
+	@Test
+	public void testID6() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.MIDDLE;
+		char mode = 'b';
+		int dist = 7;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals(res, exp);
+	}
+	
+	@Test
+	public void testID7() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.FAR;
+		char mode = 'b';
+		int dist = 12;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals(res, exp);
+	}
+	
+	@Test
+	public void testID8() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.OFF;
+		char mode = 'b';
+		int dist = 23;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals(res, exp);
+	}
+	
+	@Test
+	public void testID9() {
+		boolean exthrown = false;
+		char mode = 'c';
+		int dist = 6;
+		
+		try {
+			distanceClassificator.determineDistanceClass(mode, dist);
+		} catch (Exception e) {
+			exthrown = true;
+		}
+		
+		assertTrue(exthrown);
 	}
 	
 }
