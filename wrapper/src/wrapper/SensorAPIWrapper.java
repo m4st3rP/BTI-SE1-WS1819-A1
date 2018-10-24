@@ -16,7 +16,7 @@ public class SensorAPIWrapper {
      * @return The distance in centimeters
      */
     private char calculateCentimetersFromDiscreteValue(char value) {
-        /*var*/ double value_d = (double) value;
+        double value_d = (double) value;
         
         // revert the formula
         value_d += 5.0;
@@ -25,7 +25,6 @@ public class SensorAPIWrapper {
         value_d = Math.acos(value_d); // acos gives us back the angle the value had before cos was applied to it
         value_d = value_d / (Math.PI /2);
         value_d *= 30;
-        //TODO TEST.
         int value_i = (int)value_d;
         if(value_d - value_i != 0) {
         	value_d++;
@@ -38,16 +37,6 @@ public class SensorAPIWrapper {
     }
     
     public char d() {
-    	SensorAPIMock sensorAPIMock = (SensorAPIMock)sensorAPI;
-    	if(sensorAPIMock.isTriggered()) {
-    		char stubsDiscreteValue = sensorAPIMock.getDiscreteDistanceValue();
-    		char measuredDistance = calculateCentimetersFromDiscreteValue(stubsDiscreteValue);
-    		if(measuredDistance <= 4) {
-    			throw new IllegalStateException();
-    		}
-    		sensorAPIMock.setMeasuredDistance(measuredDistance);
-    		sensorAPIMock.setTriggered(false);
-    	}
     	return sensorAPI.d();
     }
 
