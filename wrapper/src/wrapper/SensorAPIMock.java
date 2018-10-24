@@ -4,32 +4,25 @@ package wrapper;
  * A SensorAPI mock for testing purposes
  */
 public class SensorAPIMock implements ISensorAPI {
+	
     private char discreteDistanceValue;
-    private char measuredDistance;
     private boolean isTriggered;
-
-    public SensorAPIMock() {
-        discreteDistanceValue = 0;
-        measuredDistance = Character.MAX_VALUE;
-        isTriggered = false;
-    }
 
     public SensorAPIMock(char discreteDistanceValue) {
     	if(discreteDistanceValue > 255) {
     		throw new IllegalArgumentException();
     	}
         this.discreteDistanceValue = discreteDistanceValue;
-        measuredDistance = Character.MAX_VALUE;
         isTriggered = false;
     }
 
     @Override
     public char d() {
-    	if(measuredDistance == Character.MAX_VALUE) {
-    		//MaxValue indicates that the distance has not been measured
+    	if(!isTriggered) {
     		throw new IllegalStateException();
     	}
-        return measuredDistance;
+    	isTriggered = false;
+    	return discreteDistanceValue;
     }
 
     @Override
@@ -41,23 +34,4 @@ public class SensorAPIMock implements ISensorAPI {
         this.discreteDistanceValue = discreteDistanceValue;
     }
 
-    public char getDiscreteDistanceValue() {
-        return discreteDistanceValue;
-    }
-
-	public boolean isTriggered() {
-		return isTriggered;
-	}
-
-	public void setTriggered(boolean isTriggered) {
-		this.isTriggered = isTriggered;
-	}
-
-	public char getMeasuredDistance() {
-		return measuredDistance;
-	}
-
-	public void setMeasuredDistance(char measuredDistance) {
-		this.measuredDistance = measuredDistance;
-	}
 }
