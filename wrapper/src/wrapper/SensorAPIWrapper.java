@@ -31,18 +31,6 @@ public class SensorAPIWrapper {
         }
         return (char) value_d;
     }
-    
-    public void t() {
-    	sensorAPI.t();
-    }
-    
-    public char d() {
-    	return sensorAPI.d();
-    }
-
-    public void setSensorAPI(ISensorAPI sensorAPI) {
-        this.sensorAPI = sensorAPI;
-    }
 
     public ISensorAPI getSensorAPI() {
         return sensorAPI;
