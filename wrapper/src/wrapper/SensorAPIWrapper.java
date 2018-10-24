@@ -38,15 +38,15 @@ public class SensorAPIWrapper {
     }
     
     public char d() {
-    	SensorAPIStub sensorAPIStub = (SensorAPIStub)sensorAPI;
-    	if(sensorAPIStub.isTriggered()) {
-    		char stubsDiscreteValue = sensorAPIStub.getDiscreteDistanceValue();
+    	SensorAPIMock sensorAPIMock = (SensorAPIMock)sensorAPI;
+    	if(sensorAPIMock.isTriggered()) {
+    		char stubsDiscreteValue = sensorAPIMock.getDiscreteDistanceValue();
     		char measuredDistance = calculateCentimetersFromDiscreteValue(stubsDiscreteValue);
     		if(measuredDistance <= 4) {
     			throw new IllegalStateException();
     		}
-    		sensorAPIStub.setMeasuredDistance(measuredDistance);
-    		sensorAPIStub.setTriggered(false);
+    		sensorAPIMock.setMeasuredDistance(measuredDistance);
+    		sensorAPIMock.setTriggered(false);
     	}
     	return sensorAPI.d();
     }

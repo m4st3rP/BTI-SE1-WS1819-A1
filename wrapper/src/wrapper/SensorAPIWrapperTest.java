@@ -11,7 +11,7 @@ public class JUnitTestFrameSensorAPIWrapper {
     @Test
     public void testCalculateCentimetersFromDiscreteValue() {
         char testValue = 246;
-        ISensorAPI sensorAPIstub = new SensorAPIStub(testValue);
+        ISensorAPI sensorAPIstub = new SensorAPIMock(testValue);
         SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPIstub);
 
         sensorAPIWrapper.t();
@@ -22,7 +22,7 @@ public class JUnitTestFrameSensorAPIWrapper {
     public void testCalculateCentimetersFromDiscreteValueAutomated() {
     	for(char distance = 5; distance < 30; distance++) {
     		char discreteValue = computeDiscreteDistanceValue(distance);
-	        ISensorAPI sensorAPIstub = new SensorAPIStub(discreteValue);
+	        ISensorAPI sensorAPIstub = new SensorAPIMock(discreteValue);
 	        SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPIstub);
 	        sensorAPIWrapper.t();
 	        char measuredDistance = sensorAPIWrapper.d();
@@ -33,7 +33,7 @@ public class JUnitTestFrameSensorAPIWrapper {
     @Test(expected = IllegalStateException.class)
     public void testMeasureWithoutTrigger() {
     	char testValue = 1;
-        ISensorAPI sensorAPIstub = new SensorAPIStub(testValue);
+        ISensorAPI sensorAPIstub = new SensorAPIMock(testValue);
         SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPIstub);
         sensorAPIWrapper.d();
     }
@@ -41,12 +41,12 @@ public class JUnitTestFrameSensorAPIWrapper {
     @Test
     public void testMeasureWithoutSecondTrigger() {
     	char testValue = 150;
-    	ISensorAPI sensorAPIstub = new SensorAPIStub(testValue);
+    	ISensorAPI sensorAPIstub = new SensorAPIMock(testValue);
     	SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPIstub);
     	sensorAPIWrapper.t();
     	char c1 = sensorAPIWrapper.d();
     	char testValue2 = 200;
-    	((SensorAPIStub)sensorAPIstub).setDiscreteDistanceValue(testValue2);
+    	((SensorAPIMock)sensorAPIstub).setDiscreteDistanceValue(testValue2);
     	char c2 = sensorAPIWrapper.d();
     	assertEquals(c1, c2); // Equal, because sensor has not been triggered.
     }
@@ -54,27 +54,27 @@ public class JUnitTestFrameSensorAPIWrapper {
     @Test
     public void testMeasureWithMultiTrigger() {
     	char testValue = 150;
-    	ISensorAPI sensorAPIstub = new SensorAPIStub(testValue);
+    	ISensorAPI sensorAPIstub = new SensorAPIMock(testValue);
     	SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPIstub);
     	sensorAPIWrapper.t();
     	char c1 = sensorAPIWrapper.d();
     	sensorAPIWrapper.t();
     	char testValue2 = 200;
-    	((SensorAPIStub)sensorAPIstub).setDiscreteDistanceValue(testValue2);
+    	((SensorAPIMock)sensorAPIstub).setDiscreteDistanceValue(testValue2);
     	char c2 = sensorAPIWrapper.d();
     	assertNotEquals(c1, c2);
     }
     
     @Test
     public void testValidArgumentBoundary() {
-    	ISensorAPI sensorAPIstub = new SensorAPIStub((char)0);
-    	ISensorAPI sensorAPIstub2 = new SensorAPIStub((char)255);
+    	ISensorAPI sensorAPIstub = new SensorAPIMock((char)0);
+    	ISensorAPI sensorAPIstub2 = new SensorAPIMock((char)255);
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidArguments() {
     	char testValue = 256;
-    	ISensorAPI sensorAPIstub = new SensorAPIStub(testValue);
+    	ISensorAPI sensorAPIstub = new SensorAPIMock(testValue);
     }
     
     @Test
@@ -82,7 +82,7 @@ public class JUnitTestFrameSensorAPIWrapper {
     	boolean result = false;
     	for(char c = 0; c <= 4; c++) {
     		char discreteDisVal = computeDiscreteDistanceValue(c);
-    		ISensorAPI sensorAPIstub = new SensorAPIStub(discreteDisVal);
+    		ISensorAPI sensorAPIstub = new SensorAPIMock(discreteDisVal);
     		SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPIstub);
     		sensorAPIWrapper.t();
     		try {

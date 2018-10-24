@@ -1,20 +1,20 @@
 package wrapper;
 
 /**
- * A SensorAPI stub for testing purposes
+ * A SensorAPI mock for testing purposes
  */
-public class SensorAPIStub implements ISensorAPI {
+public class SensorAPIMock implements ISensorAPI {
     private char discreteDistanceValue;
     private char measuredDistance;
     private boolean isTriggered;
 
-    public SensorAPIStub() {
+    public SensorAPIMock() {
         discreteDistanceValue = 0;
         measuredDistance = Character.MAX_VALUE;
         isTriggered = false;
     }
 
-    public SensorAPIStub(char discreteDistanceValue) {
+    public SensorAPIMock(char discreteDistanceValue) {
     	if(discreteDistanceValue > 255) {
     		throw new IllegalArgumentException();
     	}
