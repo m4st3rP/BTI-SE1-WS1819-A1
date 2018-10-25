@@ -1,6 +1,9 @@
 package service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,23 +20,6 @@ public class DistanceClassificatorTest {
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void InvalidModeArgumentsTest() {
 		distanceClassificator.determineDistanceClass('c', 10);
-	}
-	
-	@Test
-	public void InvalidModeArgumentsTest_2() {
-		System.out.println("### Invalid Characters: ###");
-		for(char ch = 0; ch < Character.MAX_VALUE; ch++) {
-			if(ch == 'A' || ch == 'B') {
-				continue;
-			}
-			try {
-				DistanceClasses dc = distanceClassificator.determineDistanceClass(ch, 10);
-				System.out.println("Char: <" + ch + "> , DistanceClass: " + dc);
-			}catch(IndexOutOfBoundsException e) {
-				//do nothing.
-			}
-		}
-		System.out.println("### Invalid Characters End ###");
 	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -138,7 +124,7 @@ public class DistanceClassificatorTest {
 		int dist = 6;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(res, exp);
+		assertEquals(exp, res);
 	}
 	
 	@Test
@@ -149,7 +135,7 @@ public class DistanceClassificatorTest {
 		int dist = 10;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(res, exp);
+		assertEquals(exp, res);
 	}
 	
 	@Test
@@ -160,7 +146,7 @@ public class DistanceClassificatorTest {
 		int dist = 23;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(res, exp);
+		assertEquals(exp, res);
 	}
 	
 	/*
@@ -174,7 +160,7 @@ public class DistanceClassificatorTest {
 		int dist = 26;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals("Mode:A, Distance:" + dist +", Expected: OFF", res, exp);
+		assertEquals("Mode:A, Distance:" + dist +", Expected: OFF", exp,  res );
 	}
 	
 	@Test
@@ -185,7 +171,7 @@ public class DistanceClassificatorTest {
 		int dist = 3;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(res, exp);
+		assertEquals(exp, res);
 	}
 	
 	@Test
@@ -196,7 +182,7 @@ public class DistanceClassificatorTest {
 		int dist = 7;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(res, exp);
+		assertEquals(exp, res);
 	}
 	
 	@Test
@@ -207,7 +193,7 @@ public class DistanceClassificatorTest {
 		int dist = 12;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(res, exp);
+		assertEquals(exp, res);
 	}
 	
 	@Test
@@ -218,7 +204,7 @@ public class DistanceClassificatorTest {
 		int dist = 23;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(res, exp);
+		assertEquals(exp, res);
 	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -226,6 +212,36 @@ public class DistanceClassificatorTest {
 		char mode = 'C';
 		int dist = 6;
 		distanceClassificator.determineDistanceClass(mode, dist);
+	}
+	
+	/*
+	 * FAILURE
+	 */
+	@Test
+	public void ID10Test() {
+		HashMap<Character, DistanceClasses> hm = new HashMap<>();
+		boolean exceptionThrown = true;
+		for(char ch = 0; ch < Character.MAX_VALUE; ch++) {
+			if(ch == 'A' || ch == 'B') {
+				continue;
+			}
+			try {
+				DistanceClasses dc = distanceClassificator.determineDistanceClass(ch, 10);
+				hm.put(ch, dc);
+				exceptionThrown = false;
+			}catch(IndexOutOfBoundsException e) {
+				//do nothing.
+			}
+		}
+		if(!exceptionThrown) {
+			System.out.println("Exception not thrown for invalid chars:");
+			for(Character c : hm.keySet()) {
+				System.out.printf("<%c> => %s\n", c, hm.get(c));
+			}
+			System.out.println("Number of invalid arguments, for which no exception has been thrown: " + hm.size());
+			System.out.println("########## END ##########");
+		}
+		assertTrue("No exception thrown for invalid mode argument", exceptionThrown);
 	}
 	
 }
