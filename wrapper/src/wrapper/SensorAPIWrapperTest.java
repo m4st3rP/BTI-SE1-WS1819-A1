@@ -7,14 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SensorAPIWrapperTest {
 
-
 	@Test
 	public void testCalculateCentimetersFromDiscreteValue() {
 		char testValue = 246;
 		ISensorAPI sensorAPImock = new SensorAPIMock(testValue);
 		SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPImock);
-//		sensorAPIWrapper.getSensorAPI().t();
-//		assertEquals(29, sensorAPIWrapper.getSensorAPI().d());
 		assertEquals(29, sensorAPIWrapper.calculateCentimetersFromDiscreteValue());
 	}
 
@@ -24,8 +21,6 @@ public class SensorAPIWrapperTest {
 			char discreteValue = computeDiscreteDistanceValue(distance);
 			ISensorAPI sensorAPImock = new SensorAPIMock(discreteValue);
 			SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPImock);
-//			sensorAPIWrapper.getSensorAPI().t();
-//			char measuredDistance = sensorAPIWrapper.getSensorAPI().d();
 			assertEquals(distance, sensorAPIWrapper.calculateCentimetersFromDiscreteValue());
 		}
 	}
@@ -57,9 +52,7 @@ public class SensorAPIWrapperTest {
 			char discreteDisVal = computeDiscreteDistanceValue(c);
 			ISensorAPI sensorAPImock = new SensorAPIMock(discreteDisVal);
 			SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPImock);
-//			sensorAPIWrapper.getSensorAPI().t();
 			try {
-//				sensorAPIWrapper.getSensorAPI().d();
 				sensorAPIWrapper.calculateCentimetersFromDiscreteValue();
 			}catch(IllegalStateException e){
 				result = true;
@@ -79,31 +72,5 @@ public class SensorAPIWrapperTest {
 		}
 		return (char)realDistance_d;
 	}
-	
-//	@Test
-//	public void testMeasureWithoutSecondTrigger() {
-//		char testValue = 150;
-//		ISensorAPI sensorAPImock = new SensorAPIMock(testValue);
-//		SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPImock);
-//		double d1 = sensorAPIWrapper.calculateCentimetersFromDiscreteValue();
-//		char testValue2 = 200;
-//		((SensorAPIMock)sensorAPImock).setDiscreteDistanceValue(testValue2);
-//		double d2 = sensorAPIWrapper.calculateCentimetersFromDiscreteValue();
-//		assertEquals(d1, d2); // Equal, because sensor has not been triggered.
-//	}
-
-//	@Test
-//	public void testMeasureWithMultiTrigger() {
-//		char testValue = 150;
-//		ISensorAPI sensorAPImock = new SensorAPIMock(testValue);
-//		SensorAPIWrapper sensorAPIWrapper = new SensorAPIWrapper(sensorAPImock);
-//		sensorAPIWrapper.getSensorAPI().t();
-//		char c1 = sensorAPIWrapper.getSensorAPI().d();
-//		sensorAPIWrapper.getSensorAPI().t();
-//		char testValue2 = 200;
-//		((SensorAPIMock)sensorAPImock).setDiscreteDistanceValue(testValue2);
-//		char c2 = sensorAPIWrapper.getSensorAPI().d();
-//		assertNotEquals(c1, c2);
-//	}
 
 }

@@ -291,33 +291,4 @@ public class DistanceClassificatorTest {
 				+ " but was:<" + dc + ">", exceptionThrown);
 	}
 	
-	/*
-	@Test @Deprecated
-	public void ID10Test_Obsolete() {
-		HashMap<Character, DistanceClasses> hm = new HashMap<>();
-		boolean exceptionThrown = true;
-		for(char ch = 0; ch < Character.MAX_VALUE; ch++) {
-			if(ch == 'A' || ch == 'B') {
-				continue;
-			}
-			try {
-				DistanceClasses dc = distanceClassificator.determineDistanceClass(ch, 10);
-				hm.put(ch, dc);
-				exceptionThrown = false;
-			}catch(IndexOutOfBoundsException e) {
-				//do nothing.
-			}
-		}
-		if(!exceptionThrown) {
-			System.out.println("Exception not thrown for invalid chars:");
-			for(Character c : hm.keySet()) {
-				System.out.printf("<%c> => %s\n", c, hm.get(c));
-			}
-			System.out.println("Number of invalid arguments, for which no exception has been thrown: " + hm.size());
-			System.out.println("########## END ##########");
-		}
-		assertTrue("No exception thrown for invalid mode argument", exceptionThrown);
-	}
-	*/
-	
 }
