@@ -3,8 +3,6 @@ package service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,198 +15,259 @@ public class DistanceClassificatorTest {
 		distanceClassificator = new IrDistanceClassificator();
 	}
 
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void InvalidModeArgumentsTest() {
-		distanceClassificator.determineDistanceClass('c', 10);
-	}
-	
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void InvalidDistanceArgumentsTest() {
-		distanceClassificator.determineDistanceClass('a', -1);
+	@Test
+	public void NegativeDistanceArgumentTest() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.CLOSE;
+		char mode = 'A';
+		int dist = -1;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
 	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void CaseSensitivityTest() {
-		DistanceClasses dc1 = distanceClassificator.determineDistanceClass('a', 5);
-		DistanceClasses dc2 = distanceClassificator.determineDistanceClass('A', 5);
-		dc1 = distanceClassificator.determineDistanceClass('b', 5);
-		dc2 = distanceClassificator.determineDistanceClass('B', 5);
+		distanceClassificator.determineDistanceClass('a', 5);
+		distanceClassificator.determineDistanceClass('A', 5);
+		distanceClassificator.determineDistanceClass('b', 5);
+		distanceClassificator.determineDistanceClass('B', 5);
 	}
 	
 	@Test
-	public void CloseModeATest() {
-		DistanceClasses dc = null;
-		for(int distance = 0; distance < 8; distance++) {
-			dc = distanceClassificator.determineDistanceClass('A', distance);
-			assertEquals(DistanceClasses.CLOSE, dc);
-		}
-	}
-	
-	/**
-	 * FAILURE
-	 */
-	@Test
-	public void MiddleModeATest() {
-		DistanceClasses dc = null;
-		for(int distance = 8; distance < 18; distance++) {
-			dc = distanceClassificator.determineDistanceClass('A', distance);
-			assertEquals("Mode:A, Distance:" + distance +", Expected: MID", DistanceClasses.MIDDLE, dc);
-		}
-	}
-	
-	@Test
-	public void FarModeATest() {
-		DistanceClasses dc = null;
-		for(int distance = 18; distance < 25; distance++) {
-			dc = distanceClassificator.determineDistanceClass('A', distance);
-			assertEquals(DistanceClasses.FAR, dc);
-		}
-	}
-	
-	/*
-	 * FAILURE
-	 */
-	@Test
-	public void OffModeATest() {
-		DistanceClasses dc = null;
-		for(int distance = 25; distance < 30; distance++) {
-			dc = distanceClassificator.determineDistanceClass('A', distance);
-			assertEquals("Mode:A, Distance:" + distance +", Expected: OFF", DistanceClasses.OFF, dc);
-		}
-	}
-	
-	@Test
-	public void CloseModeBTest() {
-		DistanceClasses dc = null;
-		for(int distance = 0; distance <= 5; distance++) {
-			dc = distanceClassificator.determineDistanceClass('B', distance);
-			assertEquals(DistanceClasses.CLOSE, dc);
-		}
-	}
-	
-	@Test
-	public void MiddleModeBTest() {
-		DistanceClasses dc = null;
-		for(int distance = 6; distance < 10; distance++) {
-			dc = distanceClassificator.determineDistanceClass('B', distance);
-			assertEquals(DistanceClasses.MIDDLE, dc);
-		}
-	}
-	
-	@Test
-	public void FarModeBTest() {
-		DistanceClasses dc = null;
-		for(int distance = 11; distance < 14; distance++) {
-			dc = distanceClassificator.determineDistanceClass('B', distance);
-			assertEquals(DistanceClasses.FAR, dc);
-		}
-	}
-
-	/*
-	 * FAILURE
-	 */
-	@Test
-	public void OffModeBTest() {
-		DistanceClasses dc = null;
-		for(int distance = 14; distance < 20; distance++) {
-			dc = distanceClassificator.determineDistanceClass('B', distance);
-			assertEquals("Mode:B, Distance:" + distance +", Expected: OFF", DistanceClasses.OFF, dc);
-		}
-	}
-	
-	@Test
-	public void ID1Test() {
+	public void ID1_candidate_Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.CLOSE;
 		char mode = 'A';
 		int dist = 6;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(exp, res);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
 	}
 	
 	@Test
-	public void ID2Test() {
+	public void ID1_inner_bound_Test() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.CLOSE;
+		char mode = 'A';
+		int dist = 7;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	@Test
+	public void ID2_candiate_Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.MIDDLE;
 		char mode = 'A';
 		int dist = 10;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(exp, res);
-	}
-	
-	@Test
-	public void ID3Test() {
-		DistanceClasses res;
-		DistanceClasses exp = DistanceClasses.FAR;
-		char mode = 'A';
-		int dist = 23;
-		
-		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(exp, res);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
 	}
 	
 	/*
 	 * FAILURE
 	 */
 	@Test
-	public void ID4Test() {
+	public void ID2_inner_bound_Test1() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.MIDDLE;
+		char mode = 'A';
+		int dist = 8;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	@Test
+	public void ID2_inner_bound_Test2() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.MIDDLE;
+		char mode = 'A';
+		int dist = 17;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	@Test
+	public void ID3_candiate_Test() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.FAR;
+		char mode = 'A';
+		int dist = 23;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	@Test
+	public void ID3_inner_bound_Test1() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.FAR;
+		char mode = 'A';
+		int dist = 18;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	@Test
+	public void ID3_inner_bound_Test2() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.FAR;
+		char mode = 'A';
+		int dist = 24;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	/*
+	 * FAILURE
+	 */
+	@Test
+	public void ID4_candidate_Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.OFF;
 		char mode = 'A';
 		int dist = 26;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals("Mode:A, Distance:" + dist +", Expected: OFF", exp,  res );
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp,  res );
+	}
+	
+	/*
+	 * FAILURE
+	 */
+	@Test
+	public void ID4_inner_bound_Test() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.OFF;
+		char mode = 'A';
+		int dist = 25;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp,  res );
 	}
 	
 	@Test
-	public void ID5Test() {
+	public void ID5_candidate_Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.CLOSE;
 		char mode = 'B';
 		int dist = 3;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(exp, res);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
 	}
 	
 	@Test
-	public void ID6Test() {
+	public void ID5_inner_bound_Test() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.CLOSE;
+		char mode = 'B';
+		int dist = 5;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	@Test
+	public void ID6_candidate_Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.MIDDLE;
 		char mode = 'B';
 		int dist = 7;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(exp, res);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
 	}
 	
 	@Test
-	public void ID7Test() {
+	public void ID6_inner_bound_Test1() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.MIDDLE;
+		char mode = 'B';
+		int dist = 6;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	@Test
+	public void ID6_inner_bound_Test2() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.MIDDLE;
+		char mode = 'B';
+		int dist = 9;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	@Test
+	public void ID7_candidate_Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.FAR;
 		char mode = 'B';
 		int dist = 12;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(exp, res);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
 	}
 	
 	@Test
-	public void ID8Test() {
+	public void ID7_inner_bound_Test1() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.FAR;
+		char mode = 'B';
+		int dist = 10;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	@Test
+	public void ID7_inner_bound_Test2() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.FAR;
+		char mode = 'B';
+		int dist = 13;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	@Test
+	public void ID8_candidate_Test() {
 		DistanceClasses res;
 		DistanceClasses exp = DistanceClasses.OFF;
 		char mode = 'B';
 		int dist = 23;
 		
 		res = distanceClassificator.determineDistanceClass(mode, dist);
-		assertEquals(exp, res);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
+	}
+	
+	/*
+	 * FAILURE
+	 */
+	@Test
+	public void ID8_inner_bound_Test() {
+		DistanceClasses res;
+		DistanceClasses exp = DistanceClasses.OFF;
+		char mode = 'B';
+		int dist = 14;
+		
+		res = distanceClassificator.determineDistanceClass(mode, dist);
+		assertEquals("Mode:<" + mode + "> Distance:<" + dist + ">", exp, res);
 	}
 	
 	@Test(expected = IndexOutOfBoundsException.class)
-	public void ID9Test() {
+	public void ID9_candidate_Test() {
 		char mode = 'C';
 		int dist = 6;
 		distanceClassificator.determineDistanceClass(mode, dist);
@@ -218,7 +277,23 @@ public class DistanceClassificatorTest {
 	 * FAILURE
 	 */
 	@Test
-	public void ID10Test() {
+	public void ID10_candidate_Test() {
+		char mode = '$';
+		int dist = 6;
+		DistanceClasses dc = null;
+		boolean exceptionThrown = false;
+		try {
+			dc = distanceClassificator.determineDistanceClass(mode, dist);
+		}catch(IndexOutOfBoundsException e){
+			exceptionThrown = true;
+		}
+		assertTrue("Mode:<" + mode + "> expected:" + IndexOutOfBoundsException.class.getSimpleName()
+				+ " but was:<" + dc + ">", exceptionThrown);
+	}
+	
+	/*
+	@Test @Deprecated
+	public void ID10Test_Obsolete() {
 		HashMap<Character, DistanceClasses> hm = new HashMap<>();
 		boolean exceptionThrown = true;
 		for(char ch = 0; ch < Character.MAX_VALUE; ch++) {
@@ -243,5 +318,6 @@ public class DistanceClassificatorTest {
 		}
 		assertTrue("No exception thrown for invalid mode argument", exceptionThrown);
 	}
+	*/
 	
 }
